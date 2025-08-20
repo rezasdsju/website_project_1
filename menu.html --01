@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Responsive Navigation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0px;
+            color: #fff;
+            padding-top: 70px; /* navbar এর কতটা নিচ থেকে content শুরু হবে টা বলে দেয় */
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-radius: 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 70px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #43cbff;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            height: 100%;
+        }
+        
+        .nav-item {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Separators between menu items */
+        .nav-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 24px;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+        
+        /* Hover effects */
+        .nav-link:hover {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+            color: #43cbff;
+        }
+        
+        .nav-link::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #43cbff, #9708cc);
+            border-radius: 4px 4px 0 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::before {
+            width: 70%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #fff;
+        }
+        
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+                width: 100%;
+                height: auto;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                transition: all 0.5s ease;
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                width: 100%;
+                height: 60px;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .nav-item:not(:last-child)::after {
+                display: none;
+            }
+            
+            .nav-link {
+                width: 100%;
+                justify-content: center;
+                padding: 20px;
+            }
+            
+            .nav-link::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <i class="fas fa-rocket"></i>
+                RTI
+            </a>
+            
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-code"></i>
+                        Programming
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-graduation-cap"></i>
+                        Tutorials
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-question-circle"></i>
+                        Quiz
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        Create Result Sheet
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        // Toggle mobile menu
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            
+            // Change icon when menu is open/closed
+            const icon = hamburger.querySelector('i');
+            if (navMenu.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+        
+        // Update screen size text
+        function updateScreenSizeText() {
+            const screenSizeText = document.getElementById('screen-size-text');
+            if (window.innerWidth >= 1200) {
+                screenSizeText.textContent = 'Large Desktop';
+            } else if (window.innerWidth >= 992) {
+                screenSizeText.textContent = 'Desktop';
+            } else if (window.innerWidth >= 768) {
+                screenSizeText.textContent = 'Tablet';
+            } else {
+                screenSizeText.textContent = 'Mobile';
+            }
+        }
+        
+        // Initial call
+        updateScreenSizeText();
+        
+        // Update on resize
+        window.addEventListener('resize', updateScreenSizeText);
+    </script>
+</body>
+</html>
