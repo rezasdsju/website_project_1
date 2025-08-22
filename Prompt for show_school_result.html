@@ -1,0 +1,82 @@
+**Prompt:**
+
+Create a **Student Result Webpage** using **HTML, CSS, and JavaScript** with the following specifications:
+
+### 1. Page Layout & Styling
+
+* Use a **modern gradient background** (`linear-gradient(135deg, #667eea 0%, #764ba2 100%)`).
+* Page content should have a **top navigation bar**, a **main container** with result details, and a **footer/back button**.
+* All containers/cards should have a **glassmorphism effect** (light background with shadow, rounded corners).
+* Ensure the design is **fully responsive** for desktop, tablet, and mobile.
+
+### 2. Navigation Bar
+
+* Fixed at the **top of the page** with a gradient background (`linear-gradient(135deg, #2c3e50 0%, #4a6491 100%)`).
+* Include a **logo with icon** on the left.
+* Navigation links on the right with subtle **hover effects** (underline animation and color change to `#43cbff`).
+* Add a **hamburger menu** for mobile view, which toggles the nav menu.
+* Include **separator lines** between menu items for desktop.
+
+### 3. Page Header Section
+
+* A **header card** with:
+
+  * Title: **"Student Result"**
+  * A horizontal **button group** containing:
+
+    * **Export all to PDF** button (primary style)
+    * **Export all to CSV** button (success style)
+    * **Clear All Data** button (danger style)
+  * Buttons should have **Font Awesome icons**.
+
+### 4. Student Result Card
+
+* A **card component** with:
+
+  * Header section (gradient background with student name in white).
+  * Body section with:
+
+    * A **highlight box** showing "Overall GPA".
+    * A **results table** with columns:
+
+      * Subject | Mark | Full Mark | Semester | Grade | GPA
+    * Table should have alternating row colors, hover effect, and styled header.
+  * Below the table, add an **action button group**:
+
+    * **Export PDF** button (primary)
+    * **Export CSV** button (success)
+
+### 5. Back Button Section
+
+* At the bottom center, add a **back button** styled as secondary:
+
+  * Text: "Back to Form"
+  * Icon: Left arrow (`fa-arrow-left`).
+
+### 6. Error Handling UI (if no data found)
+
+* Show an **error container** with:
+
+  * Red-colored error title "No result data found".
+  * Message: "Please go back and create a result sheet first."
+  * A **Go Back button** styled as primary with arrow-left icon.
+
+### 7. Responsiveness
+
+* For screens `< 768px`:
+
+  * Navigation becomes collapsible (hamburger menu).
+  * Buttons stack vertically.
+  * Table becomes horizontally scrollable.
+* For screens `< 480px`:
+
+  * Smaller paddings inside table cells and cards.
+
+### 8. CSS Guidelines
+
+* Use **linear-gradients** for headers and buttons.
+* Apply **hover animations** for buttons (lift + shadow).
+* Use consistent **spacing, padding, and typography**.
+* Ensure accessibility with good **contrast** between text and backgrounds.
+
+---
