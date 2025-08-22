@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Result</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding-top: 70px;
+        }
+        
+        /* Navigation Bar Styles */
+        .navbar {
+            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            border-radius: 0;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            height: 70px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+                
+        .logo {
+            display: flex;
+            align-items: center;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: #43cbff;
+        }
+        
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            height: 100%;
+        }
+        
+        .nav-item {
+            position: relative;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: #fff;
+            text-decoration: none;
+            padding: 0 20px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .nav-link i {
+            margin-right: 8px;
+            font-size: 18px;
+        }
+        
+        /* Separators between menu items */
+        .nav-item:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 24px;
+            width: 1px;
+            background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.5), transparent);
+        }
+        
+        /* Hover effects */
+        .nav-link:hover {
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.1), transparent);
+            color: #43cbff;
+        }
+        
+        .nav-link::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #43cbff, #9708cc);
+            border-radius: 4px 4px 0 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::before {
+            width: 70%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: #fff;
+        }
+        
+        /* Main content container */
+        .main-container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header Section */
+        .page-header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .page-title {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.2rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .page-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #43cbff, #9708cc);
+            border-radius: 2px;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        /* Card Styles */
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background: linear-gradient(90deg, #43cbff, #9708cc);
+            padding: 20px 30px;
+            color: white;
+        }
+        
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .card-body {
+            padding: 30px;
+        }
+        
+        .gpa-display {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+            border-left: 4px solid #43cbff;
+        }
+        
+        .gpa-display h4 {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 1.5rem;
+        }
+        
+        /* Table Styles */
+        .result-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .result-table th {
+            background: linear-gradient(90deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .result-table tr {
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .result-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        
+        .result-table tr:hover {
+            background-color: #e9ecef;
+        }
+        
+        .result-table td {
+            padding: 15px;
+            color: #495057;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            gap: 8px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(90deg, #43cbff, #9708cc);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-danger {
+            background: linear-gradient(90deg, #FF6B6B, #FF9E7D);
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-success {
+            background: linear-gradient(90deg, #4CD964, #2AB573);
+            color: white;
+        }
+        
+        .btn-success:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-secondary:hover {
+            background: #e9ecef;
+        }
+        
+        .action-buttons {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .back-button-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        /* Responsive styles */
+        @media screen and (max-width: 992px) {
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-buttons {
+                justify-content: center;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .hamburger {
+                display: block;
+            }
+            
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 70px;
+                flex-direction: column;
+                background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+                width: 100%;
+                height: auto;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+                transition: all 0.5s ease;
+                padding: 20px 0;
+            }
+            
+            .nav-menu.active {
+                left: 0;
+            }
+            
+            .nav-item {
+                width: 100%;
+                height: 60px;
+                display: flex;
+                justify-content: center;
+            }
+            
+            .nav-item:not(:last-child)::after {
+                display: none;
+            }
+            
+            .nav-link {
+                width: 100%;
+                justify-content: center;
+                padding: 20px;
+            }
+            
+            .nav-link::before {
+                display: none;
+            }
+            
+            .main-container {
+                padding: 15px;
+            }
+            
+            .page-header, .card {
+                padding: 20px;
+            }
+            
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .result-table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        @media screen and (max-width: 480px) {
+            .card-body {
+                padding: 15px;
+            }
+            
+            .result-table th, 
+            .result-table td {
+                padding: 10px;
+            }
+        }
+        
+        /* Error message styling */
+        .error-container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        
+        .error-title {
+            color: #dc3545;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu-container"></div>
+    
+    <div class="main-container">
+        <div class="page-header">
+            <h1 class="page-title">Student Result</h1>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary">
+                    <i class="fas fa-file-pdf"></i> Export all to PDF
+                </a>
+                <a href="#" class="btn btn-success">
+                    <i class="fas fa-file-csv"></i> Export all to CSV
+                </a>
+                <form action="#" method="get" class="d-inline">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash"></i> Clear All Data
+                    </button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h3 id="student-name-header">Student Name</h3>
+            </div>
+            <div class="card-body">
+                <div class="gpa-display">
+                    <h4 id="overall-gpa">Overall GPA: </h4>
+                </div>
+                
+                <table class="result-table">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Mark</th>
+                            <th>Full Mark</th>
+                            <th>Semester</th>
+                            <th>Grade</th>
+                            <th>GPA</th>
+                        </tr>
+                    </thead>
+                    <tbody id="result-table-body">
+                    </tbody>
+                </table>
+                
+                <div class="action-buttons">
+                    <div class="exp-pdf">
+                        <a href="#" class="btn btn-primary" onclick="downloadPDF()">
+                            <i class="fas fa-download"></i> Export PDF
+                        </a>
+                    </div>
+                    <div class="exp-csv">
+                        <a href="#" class="btn btn-success">
+                            <i class="fas fa-download"></i> Export CSV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="back-button-container">
+            <button type="button" class="btn btn-secondary" onclick="window.location.href='school_mark_input.html'">
+                <i class="fas fa-arrow-left"></i> Back to Form
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Load menu
+        fetch("menu.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("menu-container").innerHTML = data;
+                
+                const hamburger = document.querySelector('.hamburger');
+                const navMenu = document.querySelector('.nav-menu');
+                
+                if (hamburger && navMenu) {
+                    hamburger.addEventListener('click', () => {
+                        navMenu.classList.toggle('active');
+                        
+                        const icon = hamburger.querySelector('i');
+                        if (navMenu.classList.contains('active')) {
+                            icon.classList.remove('fa-bars');
+                            icon.classList.add('fa-times');
+                        } else {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                }
+            });
+
+        // global variable
+        let subjects = [];
+        let semester = "";
+        let studentName = "";
+        let overallGPA = "";
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // লোকাল স্টোরেজ থেকে ডেটা লোড করা
+            studentName = localStorage.getItem('studentName');
+            semester = localStorage.getItem('semester');
+            overallGPA = localStorage.getItem('overallGPA');
+            subjects = JSON.parse(localStorage.getItem('subjects'));
+
+            // যদি কোনো ডেটা না থাকে, তাহলে একটি মেসেজ দেখানো
+            if (!studentName || !subjects || subjects.length === 0) {
+                document.body.innerHTML = `
+                    <div id="menu-container"></div>
+                    <div class="error-container">
+                        <h1 class="error-title">No result data found</h1>
+                        <p>Please go back and create a result sheet first.</p>
+                        <div style="margin-top: 20px;">
+                            <a href="school_mark_input.html" class="btn btn-primary">
+                                <i class="fas fa-arrow-left"></i> Go Back
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                // Load menu in error container
+                fetch("menu.html")
+                    .then(response => response.text())
+                    .then(data => {
+                        document.getElementById("menu-container").innerHTML = data;
+                    });
+                return;
+            }
+
+            // HTML এলিমেন্টগুলোতে ডেটা দেখানো
+            document.getElementById('student-name-header').textContent = studentName;
+            document.getElementById('overall-gpa').textContent = `Overall GPA: ${overallGPA}`;
+
+            const tableBody = document.getElementById('result-table-body');
+            tableBody.innerHTML = '';
+
+            // প্রতিটি সাবজেক্টের জন্য একটি করে রো তৈরি করা
+            subjects.forEach(subject => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${subject.name}</td>
+                    <td>${subject.mark}</td>
+                    <td>${subject.sub_full_mark}</td>
+                    <td>${semester}</td>
+                    <td>${subject.grade}</td>
+                    <td>${subject.gpa.toFixed(2)}</td>
+                `;
+                tableBody.appendChild(row);
+            });
+        });
+
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            // Add header with styling
+            doc.setFillColor(44, 62, 80);
+            doc.rect(0, 0, 220, 30, 'F');
+            doc.setFontSize(20);
+            doc.setTextColor(255, 255, 255);
+            doc.text("STUDENT RESULT", 105, 17, { align: 'center' });
+            
+            // Reset text color
+            doc.setTextColor(0, 0, 0);
+            
+            // Student Info যোগ করা
+            doc.setFontSize(14);
+            doc.setTextColor(67, 203, 255);
+            doc.text("Student Name:", 14, 45);
+            doc.setTextColor(0, 0, 0);
+            doc.text(studentName, 50, 45);
+            
+            doc.setTextColor(67, 203, 255);
+            doc.text("Semester:", 14, 55);
+            doc.setTextColor(0, 0, 0);
+            doc.text(semester, 50, 55);
+            
+            doc.setTextColor(67, 203, 255);
+            doc.text("Overall GPA:", 14, 65);
+            doc.setTextColor(0, 0, 0);
+            doc.text(overallGPA, 50, 65);
+            
+            // Add a line separator
+            doc.setDrawColor(67, 203, 255);
+            doc.line(14, 70, 196, 70);
+
+            // Table data তৈরি
+            const tableData = subjects.map(subject => [
+                subject.name,
+                subject.mark,
+                subject.sub_full_mark,
+                semester,
+                subject.grade,
+                subject.gpa.toFixed(2)
+            ]);
+
+            // হেডার
+            const headers = [["Subject", "Mark", "Full Mark", "Semester", "Grade", "GPA"]];
+
+            // AutoTable ব্যবহার
+            doc.autoTable({
+                head: headers,
+                body: tableData,
+                startY: 75,
+                theme: 'grid',
+                headStyles: {
+                    fillColor: [67, 203, 255],
+                    textColor: [255, 255, 255],
+                    fontStyle: 'bold'
+                },
+                alternateRowStyles: {
+                    fillColor: [240, 240, 240]
+                },
+                margin: { top: 75 }
+            });
+
+            // Add footer
+            const pageCount = doc.internal.getNumberOfPages();
+            for (let i = 1; i <= pageCount; i++) {
+                doc.setPage(i);
+                doc.setFontSize(10);
+                doc.setTextColor(100, 100, 100);
+                doc.text(`Page ${i} of ${pageCount}`, 105, 285, { align: 'center' });
+                doc.text("Generated by RTI Result System", 105, 290, { align: 'center' });
+            }
+
+            // PDF download
+            doc.save(`${studentName}_Result_Sheet.pdf`);
+        }
+    </script>
+</body>
+</html>
