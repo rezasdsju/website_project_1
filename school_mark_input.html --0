@@ -207,7 +207,7 @@
 
     <div class="container">
         <h1>Create Result Sheet for School or College</h1>
-        <form method='get' action="show_result.html">
+        <form method='get' action="show_school_result.html">
             <div class="form-group">
                 <label for="student-name">Student Name:</label>
                 <input type="text" id="student-name" name="student-name" required>
@@ -237,7 +237,7 @@
             
             <button type="submit" class="submit-btn">Generate Result</button>
         </form>
-        <a href="result_options.html" class="back-button">Back to Options</a>
+        <a href="result_for.html" class="back-button">Back to Options</a>
     </div>
 
     <script>
@@ -335,6 +335,7 @@
             let totalGpaPoints = 0;
             let subjectCount = 0;
 
+            let hasFailed = false; 
             for (let i = 0; i < subjectInputs.length; i++) {
                 const subjectName = subjectInputs[i].value;
                 const mark = parseFloat(markInputs[i].value);
@@ -352,10 +353,18 @@
                     });
                     totalGpaPoints += result.gpa;
                     subjectCount++;
+                    if (result.grade==='F') {
+                        hasFailed=true;
+                    }
                 }
             }
 
-            let overallGPA = subjectCount > 0 ? (totalGpaPoints / subjectCount).toFixed(2) : '0.00';
+            let overallGPA;
+            if (subjectCount > 0) {
+                overallGPA = hasFailed? '0.00' : (totalGpaPoints / subjectCount).toFixed(2);
+            } else {
+                overallGPA = '0.00';
+            }
 
             localStorage.setItem('studentName', studentName);
             localStorage.setItem('semester', semester);
