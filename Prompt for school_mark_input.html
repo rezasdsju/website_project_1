@@ -1,0 +1,60 @@
+Create a fully responsive **HTML + CSS + JavaScript** web page for generating a school/college result sheet.
+
+### Requirements:
+
+#### General Layout
+
+* Use a **modern gradient background** (purple/blue theme).
+* Add a **centered container card** with rounded corners, padding, and box-shadow.
+* Smooth **fade-in animation** for the container when the page loads.
+* Inside the container, include a **form** to input student details and subject marks.
+
+#### Form Section
+
+1. **Student Information:**
+
+   * Input field for **Student Name** (required).
+   * Input field for **Semester** (optional, e.g., "1st Semester").
+
+2. **Subjects & Marks:**
+
+   * A section labeled **Subjects & Marks**.
+   * Initially, one subject entry row with:
+
+     * Subject name (text input).
+     * Mark (numeric input, min=0, max=200).
+     * Full Mark (dropdown: 50, 100, 200 with 100 preselected).
+   * Button **+ Add Subject** to dynamically add more subject rows.
+
+3. **Buttons:**
+
+   * A styled **Generate Result** submit button (full width, gradient background).
+   * A **Back to Options** button below the form (styled as secondary button).
+
+#### Styling (CSS)
+
+* Use modern fonts (Segoe UI, Tahoma, Verdana).
+* Container: white background, rounded corners, shadow.
+* Headings (`h1`, `h2`) styled with different colors and sizes.
+* Inputs and selects: consistent padding, border-radius, and focus effect with glowing border.
+* Subject rows: flexbox layout with slight shadow, rounded corners, and alternating background.
+* Buttons:
+
+  * **Add Subject Button**: green gradient background, hover effect.
+  * **Submit Button**: blue-purple gradient, full width, hover effect.
+  * **Back Button**: outlined style, hover turns blue background with white text.
+* Fully **responsive**:
+
+  * On mobile (≤768px): stack form fields vertically, subject entries wrap to multiple lines.
+
+#### JavaScript (Functional Part)
+
+* Function to **add new subject rows dynamically**.
+* On form submission:
+
+  * Collect student name, semester, subject details.
+  * For each subject, calculate **Grade & GPA** based on mark and full mark.
+  * Compute **Overall GPA**.
+  * Save all details to **localStorage**.
+  * Redirect to `show_school_result.html`.
+
