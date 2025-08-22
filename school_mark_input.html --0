@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School/College Result Sheet</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #fff;
+            padding-top: 90px; /* To ensure content doesn't overlap navbar */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Form container styles */
+        .container {
+            width: 95%;
+            max-width: 900px;
+            margin: 20px auto;
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            color: #333;
+            animation: fadeIn 0.8s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+            text-align: center;
+        }
+
+        h2 {
+            margin: 20px 0 10px;
+            color: #4a6491;
+            font-size: 1.4rem;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .form-group label {
+            width: 150px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .form-group input, .form-group select {
+            flex-grow: 1;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: #43cbff;
+            box-shadow: 0 0 6px rgba(67, 203, 255, 0.5);
+        }
+
+        .subject-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .subject-entry {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: nowrap;
+            padding: 12px;
+            background-color: #f9f9f9;
+            border-radius: 8px;
+            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .subject-entry label {
+            width: auto;
+            min-width: 60px;
+            margin-right: 5px;
+            font-weight: 600;
+        }
+
+        .subject-entry input, .subject-entry select {
+            flex: 1;
+            max-width: 120px;
+            padding: 8px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+        }
+
+        .subject-entry .subject-name {
+            flex: 2;
+            max-width: 200px;
+        }
+
+        .add-subject-btn {
+            background: linear-gradient(135deg, #4CAF50, #2e8b57);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            display: inline-block;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .add-subject-btn:hover {
+            background: linear-gradient(135deg, #45a049, #26734d);
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #43cbff, #9708cc);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 1.1em;
+            cursor: pointer;
+            margin-top: 25px;
+            font-weight: bold;
+            display: block;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(135deg, #2a9df4, #7a04eb);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            text-decoration: none;
+            color: #007BFF;
+            background-color: #f0f9ff;
+            border: 1px solid #007BFF;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .container {
+                margin: 15px;
+                padding: 20px;
+            }
+
+            .form-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 5px;
+            }
+
+            .form-group label {
+                width: 100%;
+                margin-bottom: 5px;
+            }
+
+            .subject-entry {
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+
+            .subject-entry input, .subject-entry select {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id='menu-container'></div>
+
+    <div class="container">
+        <h1>Create Result Sheet for School or College</h1>
+        <form method='get' action="show_result.html">
+            <div class="form-group">
+                <label for="student-name">Student Name:</label>
+                <input type="text" id="student-name" name="student-name" required>
+            </div>
+            <div class="form-group">
+                <label for="semester">Semester:</label>
+                <input type="text" id="semester" name="semester" placeholder="e.g., 1st Semester">
+            </div>
+
+            <h2>Subjects & Marks</h2>
+            <div class="subject-container" id="subjects-container">
+                <div class="subject-entry">
+                    <label for="subject1">Subject:</label>
+                    <input type="text" id="subject1" name="subject[]" placeholder="Subject Name" required class="subject-name">
+                    <label for="mark1">Mark:</label>
+                    <input type="number" id="mark1" name="mark[]" placeholder="e.g., 85" min="0" max="200" required>
+                    <label for="fullMark1">Full Mark:</label>
+                    <select id="fullMark1" name="fullMark[]">
+                        <option value="50">50</option>
+                        <option value="100" selected>100</option>
+                        <option value="200">200</option>
+                    </select>
+                </div>
+            </div>
+
+            <button type="button" class="add-subject-btn" onclick="addSubject()">+ Add Subject</button>
+            
+            <button type="submit" class="submit-btn">Generate Result</button>
+        </form>
+        <a href="result_options.html" class="back-button">Back to Options</a>
+    </div>
+
+    <script>
+        // Load menu dynamically
+        fetch("menu.html")
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("menu-container").innerHTML = data;
+                
+                const hamburger = document.querySelector('.hamburger');
+                const navMenu = document.querySelector('.nav-menu');
+                
+                if (hamburger && navMenu) {
+                    hamburger.addEventListener('click', () => {
+                        navMenu.classList.toggle('active');
+                        
+                        const icon = hamburger.querySelector('i');
+                        if (navMenu.classList.contains('active')) {
+                            icon.classList.remove('fa-bars');
+                            icon.classList.add('fa-times');
+                        } else {
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                }
+            });
+    </script>
+
+    <script>
+        // GPA এবং গ্রেড গণনা করার ফাংশন
+        function getGradeAndGpa(mark, fullMark) {
+            if (fullMark === 100) {
+                if (mark >= 80) return { grade: 'A+', gpa: 5.00 }; 
+                else if (mark >= 70) return { grade: 'A', gpa: 4.00 }; 
+                else if (mark >= 60) return { grade: 'A-', gpa: 3.50 }; 
+                else if (mark >= 50) return { grade: 'B', gpa: 3.00 }; 
+                else if (mark >= 40) return { grade: 'C', gpa: 2.00 }; 
+                else if (mark >= 33) return { grade: 'D', gpa: 1.00 };
+                else return { grade: 'F', gpa: 0.00 };
+            } else if (fullMark === 50) {
+                if (mark >= 40) return { grade: 'A+', gpa: 5.00 }; 
+                else if (mark >= 35) return { grade: 'A', gpa: 4.00 }; 
+                else if (mark >= 30) return { grade: 'A-', gpa: 3.50 }; 
+                else if (mark >= 25) return { grade: 'B', gpa: 3.00 }; 
+                else if (mark >= 20) return { grade: 'C', gpa: 2.00 }; 
+                else if (mark >= 17) return { grade: 'D', gpa: 1.00 };
+                else return { grade: 'F', gpa: 0.00 };
+            } else if (fullMark === 200) {
+                if (mark >= 160) return { grade: 'A+', gpa: 5.00 }; 
+                else if (mark >= 140) return { grade: 'A', gpa: 4.00 }; 
+                else if (mark >= 120) return { grade: 'A-', gpa: 3.50 }; 
+                else if (mark >= 100) return { grade: 'B', gpa: 3.00 }; 
+                else if (mark >= 80) return { grade: 'C', gpa: 2.00 }; 
+                else if (mark >= 66) return { grade: 'D', gpa: 1.00 };
+                else return { grade: 'F', gpa: 0.00 };
+            } else {
+                return { grade: 'F', gpa: 0.00 };
+            }
+        }
+
+        // addSubject() ফাংশন
+        function addSubject() {   
+            const container = document.getElementById('subjects-container');
+            const subjectCount = container.children.length + 1;
+            
+            const newSubjectDiv = document.createElement('div');
+            newSubjectDiv.className = 'subject-entry';
+            newSubjectDiv.innerHTML = `
+                <label for="subject${subjectCount}">Subject:</label>
+                <input type="text" id="subject${subjectCount}" name="subject[]" placeholder="Subject Name" required class="subject-name">
+                <label for="mark${subjectCount}">Mark:</label>
+                <input type="number" id="mark${subjectCount}" name="mark[]" placeholder="e.g., 85" min="0" max="200" required>
+                <label for="fullMark${subjectCount}">Full Mark:</label>
+                <select id="fullMark${subjectCount}" name="fullMark[]">
+                    <option value="50">50</option>
+                    <option value="100" selected>100</option>
+                    <option value="200">200</option>
+                </select>
+            `;
+            container.appendChild(newSubjectDiv);
+        }    
+                     
+        // ফর্ম সাবমিট ইভেন্ট
+        document.querySelector('form').addEventListener('submit', function(event) {
+            event.preventDefault();    
+
+            const studentName = document.getElementById('student-name').value;
+            const semester = document.getElementById('semester').value;
+            const subjectInputs = document.getElementsByName('subject[]');
+            const markInputs = document.getElementsByName('mark[]');
+            const fullMarkInputs = document.getElementsByName('fullMark[]');
+
+            let allSubjects = [];
+            let totalGpaPoints = 0;
+            let subjectCount = 0;
+
+            for (let i = 0; i < subjectInputs.length; i++) {
+                const subjectName = subjectInputs[i].value;
+                const mark = parseFloat(markInputs[i].value);
+                const fullMark = parseFloat(fullMarkInputs[i].value);
+
+                if (subjectName && !isNaN(mark)) {
+                    const result = getGradeAndGpa(mark, fullMark);
+                    allSubjects.push({
+                        name: subjectName,
+                        mark: mark,
+                        sub_full_mark: fullMark,
+                        semester: semester,
+                        grade: result.grade,
+                        gpa: result.gpa
+                    });
+                    totalGpaPoints += result.gpa;
+                    subjectCount++;
+                }
+            }
+
+            let overallGPA = subjectCount > 0 ? (totalGpaPoints / subjectCount).toFixed(2) : '0.00';
+
+            localStorage.setItem('studentName', studentName);
+            localStorage.setItem('semester', semester);
+            localStorage.setItem('overallGPA', overallGPA);
+            localStorage.setItem('subjects', JSON.stringify(allSubjects));
+    
+            window.location.href = 'show_school_result.html';
+        });
+    </script>
+</body>
+</html>
