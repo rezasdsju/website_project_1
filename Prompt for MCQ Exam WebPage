@@ -1,0 +1,47 @@
+Create a webpage for an MCQ exam on the topic of narration. The requirements are:
+
+Questions & Options
+
+Each exam will contain 20 multiple-choice questions (MCQs).
+
+Each question has 4 options, displayed with a radio button (small circle) to the left.
+
+Only one option can be selected per question.
+
+The 20 questions should appear on a single page, and participants can scroll to move through them.
+
+Question Pool & Randomization
+
+The HTML file will contain a large pool of MCQs.
+
+For each exam attempt, 20 random questions should be selected and displayed.
+
+Scoring System
+
+Correct answer: +1 mark
+
+Wrong answer: −0.25 mark
+
+Unanswered: 0 mark
+
+Submission & Results
+
+When the participant clicks the Submit button, the exam ends.
+
+The system should:
+
+Display the participant’s total score.
+
+Show the corrections for any mistakes (highlighting correct answers).
+
+Timer
+
+Each exam has a 20-minute timer.
+
+After the timer expires, the exam should auto-submit.
+
+Integration
+
+The webpage must be built using HTML, CSS, and JavaScript only (no external frameworks).
+
+It will be added under the “Quiz” section of an existing website.
